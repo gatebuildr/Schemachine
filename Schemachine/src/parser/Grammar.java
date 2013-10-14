@@ -11,22 +11,27 @@ package parser;
 import java.util.HashMap;
 import java.util.Vector;
 
-public class Grammar {
+public class Grammar 
+{
 	HashMap<String, RHS[]> rules;
 	Vector<String> POS;
-	public Grammar(){
+	
+	public Grammar()
+	{
 		rules = new HashMap<String, RHS[]>();
 		POS = new Vector<String>();
 	}
 	
-	public RHS[] getRHS(String lhs){
+	public RHS[] getRHS(String lhs)
+	{
 		RHS[] rhs = null;
 		if(rules.containsKey(lhs))
 			rhs = rules.get(lhs);
 		return rhs;
 	}
 	
-	public boolean isPartOfSpeech(String s){
+	public boolean isPartOfSpeech(String s)
+	{
 		return POS.contains(s);
 	}
 }

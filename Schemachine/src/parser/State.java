@@ -57,6 +57,9 @@ public class State {
 	}
 	
 	public String toString(){
-		return lhs;
+		String out = lhs;
+		for(int i = 0; i < rhs.getTerms().length; i++)
+			out = out + " " + rhs.getTerms()[i];
+		return out;
 	}
 }

@@ -8,12 +8,15 @@ package parser;
  * http://www.cs.unm.edu/~luger/
  */
 
-public class RHS {
+public class RHS 
+{
 	private String[] terms;
 	private boolean hasDot = false;
 	private int dot = -1;
 	private final static String DOT = "@";
-	public RHS(String[] t){
+	
+	public RHS(String[] t)
+	{
 		terms = t;
 		for(int i=0; i<terms.length; i++){
 			if(terms[i].compareTo(DOT)==0){

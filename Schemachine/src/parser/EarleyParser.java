@@ -25,7 +25,8 @@ public class EarleyParser {
 		return charts;
 	}
 	
-	public boolean parseSentence(String[] s){
+	public boolean parseSentence(String[] s)
+	{
 		sentence = s;
 		charts = new Chart[sentence.length+1];
 		for(int i=0; i<charts.length; i++)
@@ -34,8 +35,11 @@ public class EarleyParser {
 		RHS startRHS = new RHS(start1);
 		State start = new State("$", startRHS, 0, 0);
 		charts[0].addState(start);
-		for(int i=0; i<charts.length; i++){
-			for(int j=0; j<charts[i].size(); i++){
+		
+		for(int i=0; i<charts.length; i++)
+		{
+			for(int j=0; j<charts[i].size(); j++)
+			{
 				State st = charts[i].getState(j);
 				String next_term = st.getAfterDot();
 				if(st.isDotLast())
@@ -86,6 +90,7 @@ public class EarleyParser {
 			String after = st.getAfterDot();
 			if(after != null && lhs.compareTo(after)==0){
 				State ns = new State(st.getLHS(), st.getRHS().moveDot(), st.getI(), s.getJ());
+				charts[s.getJ ()].addState (ns);
 			}
 		}
 	}
