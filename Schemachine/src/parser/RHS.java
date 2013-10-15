@@ -13,7 +13,7 @@ public class RHS
 	private String[] terms;
 	private boolean hasDot = false;
 	private int dot = -1;
-	private final static String DOT = "@";
+	public final static String DOT = "@";
 	
 	public RHS(String[] t)
 	{
@@ -101,5 +101,9 @@ public class RHS
 		if(hasDot != other.hasDot)
 			return false;
 		return dot == other.dot;
+	}
+
+	public int getDotIndex() {
+		return dot;
 	}
 }

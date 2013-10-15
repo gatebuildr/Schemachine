@@ -8,6 +8,7 @@ public class EarleyTester {
 		Grammar grammar = new SimpleGrammar();
 		EarleyParser parser = new EarleyParser(grammar);
 		test(sentence1, parser);
+		System.out.println("\n");
 		test(sentence2, parser);
 	}
 
@@ -20,14 +21,17 @@ public class EarleyTester {
 		System.out.println("\nSentence: \"" + sentence + "\"");
 		boolean successful = parser.parseSentence(sent);
 		System.out.println("Parse successful? " + successful);
-		Chart[] charts = parser.getCharts();
-		System.out.println("");
-		System.out.println("Charts produced by the sentence \"" + 
-				sentence + "\"");
-		for(int i=0; i<charts.length; i++){
-			System.out.println("Chart " + i + ":");
-			System.out.println(charts[i]);
-		}
+		
+		TreeNode.printByLevel(parser.buildTree());
+		
+//		Chart[] charts = parser.getCharts();
+//		System.out.println("");
+//		System.out.println("Charts produced by the sentence \"" + 
+//				sentence + "\"");
+//		for(int i=0; i<charts.length; i++){
+//			System.out.println("Chart " + i + ":");
+//			System.out.println(charts[i]);
+//		}
 	}
 }
 
