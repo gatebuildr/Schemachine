@@ -12,7 +12,7 @@ public class EarleyParser {
 	private Grammar grammar;
 	private String[] sentence;
 	private Chart[] charts;
-	public static boolean DEBUG = true;
+	public static boolean DEBUG = false;
 
 	public EarleyParser(Grammar g){
 		grammar = g;
@@ -71,7 +71,6 @@ public class EarleyParser {
 		for(int i=0; i<rhs.length; i++){
 			State ns = new State(lhs, rhs[i].addDot(), j, j, s);
 			charts[j].addState(ns);
-			//			System.out.println(ns + " added from " + s);
 		}
 	}
 

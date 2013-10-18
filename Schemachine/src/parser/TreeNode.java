@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class TreeNode {
 
-	String data;
+	public String data;
 	private TreeNode[] children;
 	int numChildren;
 	TreeNode parent;
@@ -61,6 +61,10 @@ public class TreeNode {
 				return i;
 		}
 		return -1;
+	}
+
+	public TreeNode[] getChildren() {
+		return children;
 	}
 
 }
