@@ -32,7 +32,8 @@ public class WorldGrammar extends Grammar {
 		rules.put("DECLARATION", statementRHS);
 		
 		String[] question1 = {"OBJECT", "?"};
-		RHS[] questionRHS = {new RHS(question1)};
+		String[] question2 = {"IDENTITY", "OBJECT", "PREP_PHRASE", "?"};
+		RHS[] questionRHS = {new RHS(question1), new RHS(question2)};
 		rules.put("QUESTION", questionRHS);
 		
 		String[] n1 = {"NAME"};

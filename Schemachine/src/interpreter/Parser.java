@@ -34,7 +34,11 @@ public class Parser {
 			return SORRY;
 		TreeNode root = earley.buildTree();
 		root = root.getChild(0).getChild(0);
-		
+
+		return parseSentence(root);
+	}
+
+	private String parseSentence(TreeNode root) {
 		if(DEBUG){
 			TreeNode.printByLevel(root);
 			System.out.println("\n");
@@ -42,7 +46,7 @@ public class Parser {
 
 		if(root.data.equals("DECLARATION"))
 			return parseDeclaration(root.getChildren());
-		
+
 		if(root.data.equals("QUESTION"))
 			return parseQuestion(root.getChildren());
 
@@ -50,11 +54,19 @@ public class Parser {
 	}
 
 	private String parseQuestion(TreeNode[] children) {
-		String name = nameList[nameIndex];
-		WorldObject object = findObject(children[0]);
-		if(object == null)
-			return name + " does not exist.";
-		return name + " exists.";
+		if(children.length == 2 && children[0].data.equals("OBJECT") && children[1].data.equals("?")){
+			String name = nameList[nameIndex];
+			WorldObject object = findObject(children[0]);
+			if(object == null)
+				return name + " does not exist.";
+			return name + " exists.";
+		}
+		if(children.length == 4 && children[0].data.equals("IDENTITY") && children[1].data.equals("OBJECT") && children[2].data.equals("PREP_PHRASE")){
+			WorldObject object = findObject(children[1]);
+			Quality[] qualities = getQualities(children[2]);
+			return "Yes, " + object.getName() + " is " + qualityListToString(qualities) + ".";
+		}
+		return SORRY;
 	}
 
 	private WorldObject findObject(TreeNode objectNode) {
@@ -63,10 +75,10 @@ public class Parser {
 	}
 
 	private String parseDeclaration(TreeNode[] children) {
-		
+
 		if(children.length == 2 && children[0].data.equals("DECLARATION"))
 			return parseDeclaration(children[0].getChildren());
-		
+
 		if(children.length == 1 && children[0].data.equals("OBJECT")){
 			WorldObject object = findOrCreateObject(children[0]);
 			return object.getName();
@@ -75,14 +87,27 @@ public class Parser {
 			WorldObject object = findOrCreateObject(children[0]);
 			Quality[] qualityList = getQualities(children[2]);
 			String out = object.getName() + " is ";
-			for(Quality q : qualityList){
+			
+			for(Quality q: qualityList)
 				object.setQuality(q);
-				out += q + ", ";
-			}
-			out = out.substring(0, out.length()-2) + ".";
+			
+			String qString = qualityListToString(qualityList);
+			
+			out += qString + ".";
 			return out;
 		}
 		return SORRY;
+	}
+
+	private String qualityListToString(Quality[] qualityList) {
+		String qString = qualityList[0].toString();
+		for(int i=1; i< qualityList.length-1; i++){
+			qString += qualityList[i] + ", ";
+		}
+		if(qualityList.length > 1){
+			qString += "and " + qualityList[qualityList.length-1].toString();
+		}
+		return qString;
 	}
 
 	private Quality[] getQualities(TreeNode prepPhraseRoot) {

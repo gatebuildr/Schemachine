@@ -11,7 +11,7 @@ public class Quality {
 	}
 	
 	public String toString(){
-		return prep.toString() + " " + object;
+		return prep.toString().toLowerCase() + " " + object;
 	}
 	
 }
