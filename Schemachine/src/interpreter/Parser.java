@@ -71,7 +71,7 @@ public class Parser {
 			WorldObject object = findOrCreateObject(children[0]);
 			Quality[] qualityList = getQualities(children[2]);
 			for(Quality q : qualityList){
-				object.assertQuality(q);
+				object.setQuality(q);
 			}
 		}
 		return SORRY;

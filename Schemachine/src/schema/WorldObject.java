@@ -90,11 +90,11 @@ public class WorldObject {
 		burdens.remove(burden);
 	}
 
-	public void assertQuality(Quality q) {
+	public void setQuality(Quality q) {
 		switch(q.prep){
 		case IN:
 			try {
-				addContents(q.object);
+				q.object.addContents(this);
 			} catch (NotAContainerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -110,5 +110,8 @@ public class WorldObject {
 			throw new RuntimeException("Unknown preposition " + q.prep);
 		}		
 	}
-
+	
+	public String toString(){
+		return name;
+	}
 }

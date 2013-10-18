@@ -10,4 +10,8 @@ public class Quality {
 		this.object = object;
 	}
 	
+	public String toString(){
+		return prep.toString() + " " + object;
+	}
+	
 }
