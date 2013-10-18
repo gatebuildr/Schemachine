@@ -62,6 +62,7 @@ public class Parser {
 	private String parseStatement(TreeNode[] children) {
 		if(children.length == 2 && children[0].data.equals("OBJECT") && children[1].data.equals(".")){
 			WorldObject object = findOrCreateObject(children[0]);
+			return object.getName();
 		}
 		return SORRY;
 	}
