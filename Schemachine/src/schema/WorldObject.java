@@ -101,7 +101,7 @@ public class WorldObject {
 			} break;
 		case ON:
 			try {
-				addBurden(q.object);
+				q.object.addBurden(this);
 			} catch (NotASupporterException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

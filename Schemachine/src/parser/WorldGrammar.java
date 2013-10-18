@@ -54,8 +54,9 @@ public class WorldGrammar extends Grammar {
 		RHS[] prepPhraseRHS = {new RHS(pp1)};
 		rules.put("PREP_PHRASE", prepPhraseRHS);
 		
-		String[] prep1 = {"IN"};
-		RHS[] prepRHS = {new RHS(prep1)};
+		String[] prepIn = {"IN"};
+		String[] prepOn = {"ON"};
+		RHS[] prepRHS = {new RHS(prepIn), new RHS(prepOn)};
 		rules.put("PREP", prepRHS);
 	}
 }

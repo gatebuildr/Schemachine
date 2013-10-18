@@ -11,6 +11,7 @@ public class ParserTest {
 
 	private final String OBJECT = "object";
 	private final String CONTAINER = "container";
+	private final String SUPPORTER = "supporter";
 	private final String AFFIRM_PRESENCE = "object exists.";
 	private final String DENY_PRESENCE = "object does not exist.";
 	
@@ -18,6 +19,7 @@ public class ParserTest {
 	LexicalAnalyzer analyzer = new LexicalAnalyzer();
 	private final TokenSet declarationSet = analyzer.analyze(OBJECT + " .");
 	private final TokenSet containerDeclarationSet = analyzer.analyze(OBJECT + " is in " + CONTAINER + ".");
+	private final TokenSet supporterDeclarationSet = analyzer.analyze(OBJECT + " is on " + SUPPORTER + ".");
 	private final TokenSet querySet = analyzer.analyze(OBJECT + "?");
 	
 	@Test
@@ -63,6 +65,20 @@ public class ParserTest {
 		assertNotNull(container);
 		assertTrue(container.contains(object));
 		assertFalse(object.contains(container));
+	}
+	
+	@Test
+	public void testDeclareSupporter(){
+		World world= new World();
+		Parser parser = new Parser(world);
+		parser.parse(supporterDeclarationSet);
+		assertEquals(world.numObjects(), 2);
+		WorldObject object = world.findObject(OBJECT);
+		WorldObject supporter = world.findObject(SUPPORTER);
+		assertNotNull(object);
+		assertNotNull(supporter);
+		assertTrue(supporter.supports(object));
+		assertFalse(object.supports(supporter));
 	}
 
 }
