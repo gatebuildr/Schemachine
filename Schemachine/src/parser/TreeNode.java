@@ -7,7 +7,7 @@ public class TreeNode {
 
 	public String data;
 	private TreeNode[] children;
-	int numChildren;
+	public int numChildren;
 	TreeNode parent;
 	boolean complete;
 

@@ -45,28 +45,28 @@ public class Parser {
 		}
 
 		if(root.data.equals("DECLARATION"))
-			return parseDeclaration(root.getChildren());
+			return parseDeclaration(root);
 
 		if(root.data.equals("QUESTION"))
-			return parseQuestion(root.getChildren());
+			return parseQuestion(root);
 
 		return SORRY;
 	}
 
-	private String parseQuestion(TreeNode[] children) {
-		if(children.length == 2 && children[0].data.equals("OBJECT") && children[1].data.equals("?")){
+	private String parseQuestion(TreeNode root) {
+		if(root.numChildren == 2 && root.getChild(0).data.equals("OBJECT") && root.getChild(1).data.equals("?")){
 			String name = nameList[nameIndex];
-			WorldObject object = findObject(children[0]);
+			WorldObject object = findObject(root.getChild(0));
 			if(object == null)
 				return name + " does not exist.";
 			return name + " exists.";
 		}
-		if(children.length == 4 && children[0].data.equals("IDENTITY") && children[1].data.equals("OBJECT") && children[2].data.equals("PREP_PHRASE")){
+		if(root.numChildren == 4 && root.getChild(0).data.equals("IDENTITY") && root.getChild(1).data.equals("OBJECT") && root.getChild(2).data.equals("PREP_PHRASE")){
 			String name = nameList[nameIndex];
-			WorldObject object = findObject(children[1]);
+			WorldObject object = findObject(root.getChild(1));
 			if(object == null)
 				return name + " does not exist.";
-			Quality[] qualities = getQualities(children[2]);
+			Quality[] qualities = getQualities(root.getChild(2));
 			for(Quality q : qualities){
 				if(!object.checkQuality(q)){
 					return "No, " + object.getName() + " is not " + q + ".";
@@ -82,18 +82,18 @@ public class Parser {
 		return world.findObject(name);
 	}
 
-	private String parseDeclaration(TreeNode[] children) {
+	private String parseDeclaration(TreeNode root) {
 
-		if(children.length == 2 && children[0].data.equals("DECLARATION"))
-			return parseDeclaration(children[0].getChildren());
+		if(root.numChildren == 2 && root.getChild(0).data.equals("DECLARATION"))
+			return parseDeclaration(root.getChild(0));
 
-		if(children.length == 1 && children[0].data.equals("OBJECT")){
-			WorldObject object = findOrCreateObject(children[0]);
+		if(root.numChildren == 1 && root.getChild(0).data.equals("OBJECT")){
+			WorldObject object = findOrCreateObject(root.getChild(0));
 			return object.getName();
 		}
-		if(children.length == 3 && children[0].data.equals("OBJECT") && children[1].data.equals("IDENTITY") && children[2].data.equals("PREP_PHRASE")){
-			WorldObject object = findOrCreateObject(children[0]);
-			Quality[] qualityList = getQualities(children[2]);
+		if(root.numChildren == 3 && root.getChild(0).data.equals("OBJECT") && root.getChild(1).data.equals("IDENTITY") && root.getChild(2).data.equals("PREP_PHRASE")){
+			WorldObject object = findOrCreateObject(root.getChild(0));
+			Quality[] qualityList = getQualities(root.getChild(2));
 			String out = object.getName() + " is ";
 			
 			for(Quality q: qualityList)
