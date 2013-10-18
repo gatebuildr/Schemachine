@@ -25,6 +25,12 @@ public class WorldGrammar extends Grammar {
 		RHS[] startRHS = {new RHS(s1), new RHS(s2)};
 		rules.put("S", startRHS);
 		
+//		String[] declaration0 = {"DECLARATION", "."};
+//		String[] declaration1 = {"OBJECT"};
+//		String[] declaration2 = {"OBJECT", "IDENTITY", "PREP_PHRASE"};
+//		RHS[] statementRHS = {new RHS(declaration0), new RHS(declaration1), new RHS(declaration2)};
+//		rules.put("DECLARATION", statementRHS);
+		
 		String[] declaration1 = {"OBJECT", "."};
 		String[] declaration2 = {"OBJECT", "IDENTITY", "PREP_PHRASE", "."};
 		RHS[] statementRHS = {new RHS(declaration1), new RHS(declaration2)};

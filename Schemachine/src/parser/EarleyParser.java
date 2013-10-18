@@ -158,7 +158,7 @@ public class EarleyParser {
 				if(DEBUG)
 					System.out.println("moved down to " + currentNode.data + " at index " + i);
 			}
-			else if(!current.isDotFirst()){
+			else if(!current.isDotFirst() && currentNode.numChildren != 0){
 				i = current.getDotIndex()-1;
 				currentNode = currentNode.getChild(i);
 				if(DEBUG)
