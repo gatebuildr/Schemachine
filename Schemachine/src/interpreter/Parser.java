@@ -62,8 +62,16 @@ public class Parser {
 			return name + " exists.";
 		}
 		if(children.length == 4 && children[0].data.equals("IDENTITY") && children[1].data.equals("OBJECT") && children[2].data.equals("PREP_PHRASE")){
+			String name = nameList[nameIndex];
 			WorldObject object = findObject(children[1]);
+			if(object == null)
+				return name + " does not exist.";
 			Quality[] qualities = getQualities(children[2]);
+			for(Quality q : qualities){
+				if(!object.checkQuality(q)){
+					return "No, " + object.getName() + " is not " + q + ".";
+				}
+			}
 			return "Yes, " + object.getName() + " is " + qualityListToString(qualities) + ".";
 		}
 		return SORRY;

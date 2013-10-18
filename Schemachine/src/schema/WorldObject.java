@@ -114,4 +114,15 @@ public class WorldObject {
 	public String toString(){
 		return name;
 	}
+
+	public boolean checkQuality(Quality q) {
+		switch(q.prep){
+		case IN:
+			return q.object.contains(this);
+		case ON:
+			return q.object.supports(this);
+		default:
+			throw new RuntimeException("Unknown preposition " + q.prep);
+		}		
+	}
 }
