@@ -70,9 +70,13 @@ public class Parser {
 		if(children.length == 4 && children[0].data.equals("OBJECT") && children[1].data.equals("IDENTITY") && children[2].data.equals("PREP_PHRASE") && children[3].data.equals(".")){
 			WorldObject object = findOrCreateObject(children[0]);
 			Quality[] qualityList = getQualities(children[2]);
+			String out = object.getName() + " is ";
 			for(Quality q : qualityList){
 				object.setQuality(q);
+				out += q + ", ";
 			}
+			out = out.substring(0, out.length()-2) + ".";
+			return out;
 		}
 		return SORRY;
 	}
