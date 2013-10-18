@@ -1,4 +1,7 @@
 package schema;
+import interpreter.Keyword;
+import interpreter.Quality;
+
 import java.util.HashSet;
 
 
@@ -85,6 +88,27 @@ public class WorldObject {
 
 	public void removeBurden(WorldObject burden) {
 		burdens.remove(burden);
+	}
+
+	public void assertQuality(Quality q) {
+		switch(q.prep){
+		case IN:
+			try {
+				addContents(q.object);
+			} catch (NotAContainerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} break;
+		case ON:
+			try {
+				addBurden(q.object);
+			} catch (NotASupporterException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} break;
+		default:
+			throw new RuntimeException("Unknown preposition " + q.prep);
+		}		
 	}
 
 }

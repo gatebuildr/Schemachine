@@ -15,6 +15,8 @@ public class WorldGrammar extends Grammar {
 		POS.add("OBJECT");
 		POS.add(".");
 		POS.add("?");
+		POS.add("IDENTITY");
+		POS.add("PREP");
 	}
 
 	private void initRules() {
@@ -24,7 +26,8 @@ public class WorldGrammar extends Grammar {
 		rules.put("S", startRHS);
 		
 		String[] declaration1 = {"OBJECT", "."};
-		RHS[] statementRHS = {new RHS(declaration1)};
+		String[] declaration2 = {"OBJECT", "IDENTITY", "PREP_PHRASE", "."};
+		RHS[] statementRHS = {new RHS(declaration1), new RHS(declaration2)};
 		rules.put("DECLARATION", statementRHS);
 		
 		String[] question1 = {"OBJECT", "?"};
@@ -42,5 +45,17 @@ public class WorldGrammar extends Grammar {
 		String[] q1 = {"QUERY"};
 		RHS[] qRHS = {new RHS(q1)};
 		rules.put("?", qRHS);
+		
+		String[] i1 = {"IS"};
+		RHS[] identityRHS = {new RHS(i1)};
+		rules.put("IDENTITY", identityRHS);
+		
+		String[] pp1 = {"PREP", "OBJECT"};
+		RHS[] prepPhraseRHS = {new RHS(pp1)};
+		rules.put("PREP_PHRASE", prepPhraseRHS);
+		
+		String[] prep1 = {"IN"};
+		RHS[] prepRHS = {new RHS(prep1)};
+		rules.put("PREP", prepRHS);
 	}
 }

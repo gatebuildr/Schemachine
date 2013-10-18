@@ -14,6 +14,7 @@ public class Parser {
 	private EarleyParser earley;
 	private String[] nameList;
 	private int nameIndex;
+	public static boolean DEBUG = true;
 
 	public Parser(World world){
 		this.world = world;
@@ -33,6 +34,11 @@ public class Parser {
 			return SORRY;
 		TreeNode root = earley.buildTree();
 		root = root.getChild(0).getChild(0);
+		
+		if(DEBUG){
+			TreeNode.printByLevel(root);
+			System.out.println("\n");
+		}
 
 		if(root.data.equals("DECLARATION"))
 			return parseDeclaration(root.getChildren());
@@ -61,7 +67,22 @@ public class Parser {
 			WorldObject object = findOrCreateObject(children[0]);
 			return object.getName();
 		}
+		if(children.length == 4 && children[0].data.equals("OBJECT") && children[1].data.equals("IDENTITY") && children[2].data.equals("PREP_PHRASE") && children[3].data.equals(".")){
+			WorldObject object = findOrCreateObject(children[0]);
+			Quality[] qualityList = getQualities(children[2]);
+			for(Quality q : qualityList){
+				object.assertQuality(q);
+			}
+		}
 		return SORRY;
+	}
+
+	private Quality[] getQualities(TreeNode prepPhraseRoot) {
+		return new Quality[]{new Quality(getPreposition(prepPhraseRoot.getChild(0)), findOrCreateObject(prepPhraseRoot.getChild(1)))};
+	}
+
+	private Keyword getPreposition(TreeNode prepRoot) {
+		return Keyword.valueOf(prepRoot.getChild(0).data);
 	}
 
 	private WorldObject findOrCreateObject(TreeNode objectRoot) {

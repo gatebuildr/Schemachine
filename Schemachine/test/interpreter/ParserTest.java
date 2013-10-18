@@ -9,11 +9,13 @@ import schema.World;
 public class ParserTest {
 
 	private final String OBJECT = "object";
+	private final String CONTAINER = "container";
 	private final String AFFIRM_PRESENCE = "object exists.";
 	private final String DENY_PRESENCE = "object does not exist.";
 	
 	private final TokenSet emptySet = new TokenSet();
 	private final TokenSet declarationSet = new TokenSet(new Keyword[]{Keyword.NAME, Keyword.PERIOD}, new String[]{OBJECT});
+	private final TokenSet containerDeclarationSet = new TokenSet(new Keyword[]{Keyword.NAME, Keyword.IS, Keyword.IN, Keyword.NAME, Keyword.PERIOD}, new String[]{OBJECT, CONTAINER});
 	private final TokenSet querySet = new TokenSet(new Keyword[]{Keyword.NAME, Keyword.QUERY}, new String[]{OBJECT});
 	
 	@Test
@@ -45,6 +47,14 @@ public class ParserTest {
 		World world = new World();
 		Parser parser = new Parser(world);
 		assertEquals(parser.parse(querySet), DENY_PRESENCE);
+	}
+	
+	@Test
+	public void testDeclareContainer(){
+		World world= new World();
+		Parser parser = new Parser(world);
+		parser.parse(containerDeclarationSet);
+		assertEquals(world.numObjects(), 2);
 	}
 
 }
