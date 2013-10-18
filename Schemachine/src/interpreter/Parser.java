@@ -10,9 +10,6 @@ import schema.WorldObject;
 
 public class Parser {
 	private static final String SORRY = "Sorry, I didn't understand that statement.";
-	private static ArrayList<Keyword> simpleDeclaration;
-	private static ArrayList<Keyword> simpleQuery;
-
 	private World world;
 	private EarleyParser earley;
 	private String[] nameList;
@@ -37,8 +34,8 @@ public class Parser {
 		TreeNode root = earley.buildTree();
 		root = root.getChild(0).getChild(0);
 
-		if(root.data.equals("STATEMENT"))
-			return parseStatement(root.getChildren());
+		if(root.data.equals("DECLARATION"))
+			return parseDeclaration(root.getChildren());
 		
 		if(root.data.equals("QUESTION"))
 			return parseQuestion(root.getChildren());
@@ -59,7 +56,7 @@ public class Parser {
 		return world.findObject(name);
 	}
 
-	private String parseStatement(TreeNode[] children) {
+	private String parseDeclaration(TreeNode[] children) {
 		if(children.length == 2 && children[0].data.equals("OBJECT") && children[1].data.equals(".")){
 			WorldObject object = findOrCreateObject(children[0]);
 			return object.getName();
