@@ -63,11 +63,15 @@ public class Parser {
 	}
 
 	private String parseDeclaration(TreeNode[] children) {
-		if(children.length == 2 && children[0].data.equals("OBJECT") && children[1].data.equals(".")){
+		
+		if(children.length == 2 && children[0].data.equals("DECLARATION"))
+			return parseDeclaration(children[0].getChildren());
+		
+		if(children.length == 1 && children[0].data.equals("OBJECT")){
 			WorldObject object = findOrCreateObject(children[0]);
 			return object.getName();
 		}
-		if(children.length == 4 && children[0].data.equals("OBJECT") && children[1].data.equals("IDENTITY") && children[2].data.equals("PREP_PHRASE") && children[3].data.equals(".")){
+		if(children.length == 3 && children[0].data.equals("OBJECT") && children[1].data.equals("IDENTITY") && children[2].data.equals("PREP_PHRASE")){
 			WorldObject object = findOrCreateObject(children[0]);
 			Quality[] qualityList = getQualities(children[2]);
 			String out = object.getName() + " is ";
