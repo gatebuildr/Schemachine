@@ -18,13 +18,15 @@ public class TreeNode {
 	
 	public boolean isComplete(){
 		if(complete) return true;
-		complete = true;
+//		complete = true;
 		if(numChildren == 0)
 			return false;
 		for(TreeNode child : children)
-			if(!child.isComplete())
+			if(!child.isComplete()){
 				complete = false;
-		return complete;
+				return false;
+			}
+		return true;
 	}
 
 	public static void printByLevel(TreeNode root){
@@ -37,10 +39,6 @@ public class TreeNode {
 				for(TreeNode tn : node.children)
 					if(tn !=  null)
 						level.add(tn);
-			//        if(node.leftChild!= null)
-			//        level.add(node.leftChild);
-			//        if(node.rightChild!= null)
-			//        level.add(node.rightChild);
 		}
 	}
 
@@ -56,6 +54,14 @@ public class TreeNode {
 
 	public TreeNode getChild(int i) {
 		return children[i];
+	}
+	
+	public int getIndexOfChild(TreeNode child){
+		for(int i=0; i<numChildren; i++){
+			if(children[i] == child)
+				return i;
+		}
+		return -1;
 	}
 
 }

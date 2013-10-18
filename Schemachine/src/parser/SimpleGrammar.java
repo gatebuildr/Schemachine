@@ -26,13 +26,11 @@ public class SimpleGrammar extends Grammar {
 	 rules.put ("S", sRHS); 
 	 String[] np1 = {"NP","PP"}; 
 	 String[] np2 = {"Noun"}; 
-	 RHS[] npRHS = {new RHS(np1), 
-	 new RHS(np2)}; 
+	 RHS[] npRHS = {new RHS(np1), new RHS(np2)};
 	 rules.put ("NP", npRHS); 
 	 String[] vp1 = {"Verb","NP"}; 
 	 String[] vp2 = {"VP", "PP"}; 
-	 RHS[] vpRHS = {new RHS(vp1), 
-	 new RHS(vp2)}; 
+	 RHS[] vpRHS = {new RHS(vp1)};
 	 rules.put ("VP", vpRHS); 
 	 String[] pp1 = {"Prep","NP"}; 
 	 RHS[] ppRHS = {new RHS(pp1)}; 
