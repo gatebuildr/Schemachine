@@ -23,15 +23,6 @@ public class EarleyTester {
 		System.out.println("Parse successful? " + successful);
 		
 		TreeNode.printByLevel(parser.buildTree());
-		
-//		Chart[] charts = parser.getCharts();
-//		System.out.println("");
-//		System.out.println("Charts produced by the sentence \"" + 
-//				sentence + "\"");
-//		for(int i=0; i<charts.length; i++){
-//			System.out.println("Chart " + i + ":");
-//			System.out.println(charts[i]);
-//		}
 	}
 }
 

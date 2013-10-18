@@ -12,6 +12,7 @@ public class EarleyParser {
 	private Grammar grammar;
 	private String[] sentence;
 	private Chart[] charts;
+	public static boolean DEBUG = true;
 
 	public EarleyParser(Grammar g){
 		grammar = g;
@@ -56,8 +57,10 @@ public class EarleyParser {
 		RHS finRHS = new RHS(fin);
 		State finish = new State("$", finRHS, 0, sentence.length, null);
 		State last = charts[sentence.length].getState(charts[sentence.length].size()-1);
-		//		System.out.println("traceback:");
-		System.out.println(last.history());
+		if(DEBUG){
+			System.out.println("traceback:");
+			System.out.println(last.history());
+		}
 		return finish.equals(last);
 	}
 
@@ -99,50 +102,6 @@ public class EarleyParser {
 		}
 	}
 
-	//	public TreeNode buildTree(){
-	//		State last = charts[sentence.length].getState(charts[sentence.length].size()-1);
-	//		State current = last;
-	//		String[] start1 = {"@", "S"};
-	//		RHS startRHS = new RHS(start1);
-	//		State rootState = new State("$", startRHS, 0, 0, null);
-	//		TreeNode root = new TreeNode(null);
-	//		root.data = current.getLHS();
-	//		TreeNode currentNode = root;
-	//		int i = 0;
-	//		while(!current.equals(rootState)){
-	//			System.out.println("\nsitting at " + currentNode.data + ": " + current);
-	//			
-	//			if(current.isDotFirst()){
-	//				currentNode.complete = true;
-	//				System.out.println("backing out from " + currentNode.data);
-	//				int childIndex = 0;
-	//				while(currentNode.isComplete() && currentNode.parent != null){
-	//					childIndex = currentNode.parent.getIndexOfChild(currentNode);
-	//					currentNode = currentNode.parent;
-	//					System.out.println("backed up to " + currentNode.data);
-	//				}
-	//				if(childIndex > 0){
-	////					System.out.println("child exists at " + currentNode.data + " to the left of " + currentNode.getChild(childIndex).data);
-	////					currentNode = currentNode.getChild(childIndex-1);
-	////					System.out.println("moved down to " + currentNode.data + " at index " + (childIndex-1));
-	//				}
-	//			}
-	//			else if(current.isDotLast()){ //initialize children
-	//				currentNode.initializeChildren(current.getRTerms());
-	//				i = currentNode.numChildren-1;
-	//				currentNode = currentNode.getChild(i);
-	//				System.out.println("moved down to " + currentNode.data + " at index " + i);
-	//			}
-	//			else{
-	//				i = current.getDotIndex()-1;
-	//				currentNode = currentNode.getChild(i);
-	//				System.out.println("Moved down to " + currentNode.data + " at index " + i);
-	//			}
-	//			current = current.getPrevious();
-	//		}
-	//		return root;
-	//	}
-
 	public TreeNode buildTree(){
 		State last = charts[sentence.length].getState(charts[sentence.length].size()-1);
 		State current = last;
@@ -154,9 +113,8 @@ public class EarleyParser {
 		TreeNode currentNode = root;
 		int i = 0;
 		while(!current.equals(rootState)){
-			System.out.println("\nsitting at " + currentNode.data + ": " + current);
-
-
+			if(DEBUG)
+				System.out.println("\nsitting at " + currentNode.data + ": " + current);
 
 			if(current.isDotFirst()){
 				currentNode.complete = true;
@@ -164,50 +122,48 @@ public class EarleyParser {
 
 			//if we're not at the right spot, back up until we get there
 			if(!current.getLHS().equals(currentNode.data)){
-				System.out.println("LHS " + current.getLHS() + " doesn't match node " + currentNode.data + ", backing up");
+				if(DEBUG)
+					System.out.println("LHS " + current.getLHS() + " doesn't match node " + currentNode.data + ", backing up");
 				int childIndex = 1;
-				//				currentNode.complete = true;
 				while(currentNode.isComplete() && currentNode.parent != null){
 					childIndex = currentNode.parent.getIndexOfChild(currentNode);
 					currentNode = currentNode.parent;
-					System.out.println("backed up to " + currentNode.data);
+					if(DEBUG)
+						System.out.println("backed up to " + currentNode.data);
 				}
-				System.out.println("last recorded childIndex: " + childIndex);
-				if(childIndex > 0)
-					System.out.println("child at childIndex-1:" + currentNode.getChild(childIndex-1).data);
+				if(DEBUG){
+					System.out.println("last recorded childIndex: " + childIndex);
+					if(childIndex > 0)
+						System.out.println("child at childIndex-1:" + currentNode.getChild(childIndex-1).data);
+				}
 				if(childIndex > 0 && currentNode.getChild(childIndex-1).data.equals(current.getLHS())){
 					currentNode = currentNode.getChild(childIndex-1);
-					System.out.println("moved down to child " + (childIndex-1) + ": " + currentNode.data);
+					if(DEBUG)
+						System.out.println("moved down to child " + (childIndex-1) + ": " + currentNode.data);
 				}
 			}
 
-			if(!current.isDotFirst())
+			if(DEBUG && !current.isDotFirst())
 				System.out.println("LHS " + current.getLHS() + " matches node " + currentNode.data);
 
-
-
-
-			//			if(current.isDotFirst()){
-			//				currentNode.complete = true;
-			//				System.out.println("backing out from " + currentNode.data);
-			//				int childIndex = 0;
-			//				while(currentNode.isComplete() && currentNode.parent != null){
-			//					childIndex = currentNode.parent.getIndexOfChild(currentNode);
-			//					currentNode = currentNode.parent;
-			//					System.out.println("backed up to " + currentNode.data);
-			//				}
-			//			}
-			//			else
 			if(current.isDotLast()){ //initialize children
 				currentNode.initializeChildren(current.getRTerms());
+				if(DEBUG)
+					System.out.println("initialized " + currentNode.data);
 				i = currentNode.numChildren-1;
 				currentNode = currentNode.getChild(i);
-				System.out.println("moved down to " + currentNode.data + " at index " + i);
+				if(grammar.isPartOfSpeech(currentNode.parent.data)){
+					currentNode.complete = true;
+					currentNode.parent.complete = true;
+				}
+				if(DEBUG)
+					System.out.println("moved down to " + currentNode.data + " at index " + i);
 			}
 			else if(!current.isDotFirst()){
 				i = current.getDotIndex()-1;
 				currentNode = currentNode.getChild(i);
-				System.out.println("moved down to " + currentNode.data + " at index " + i);
+				if(DEBUG)
+					System.out.println("moved down to " + currentNode.data + " at index " + i);
 			}
 			current = current.getPrevious();
 		}

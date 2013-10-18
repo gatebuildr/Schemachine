@@ -49,7 +49,6 @@ public class TreeNode {
 			children[i] = new TreeNode(this);
 			children[i].data = rTerms[i];
 		}
-		System.out.println("initializing " + data + " with " + rTerms.length + " children");
 	}
 
 	public TreeNode getChild(int i) {
