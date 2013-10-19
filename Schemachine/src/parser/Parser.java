@@ -1,12 +1,18 @@
-package interpreter;
+package parser;
+
+import interpreter.TokenSet;
 
 import java.util.ArrayList;
 
-import parser.EarleyParser;
-import parser.TreeNode;
-import parser.WorldGrammar;
-import schema.World;
-import schema.WorldObject;
+import model.Quality;
+import model.World;
+import model.WorldObject;
+
+
+import earley.EarleyParser;
+import earley.TreeNode;
+import grammar.WorldGrammar;
+
 
 public class Parser {
 	private static final String SORRY = "Sorry, I didn't understand that statement.";
@@ -123,7 +129,7 @@ public class Parser {
 	}
 
 	private Keyword getPreposition(TreeNode prepRoot) {
-		return Keyword.valueOf(prepRoot.getChild(0).data);
+		return Keyword.valueOf(prepRoot.getChild(0).data.toString());
 	}
 
 	private WorldObject findOrCreateObject(TreeNode objectRoot) {

@@ -1,4 +1,8 @@
-package parser;
+package earley;
+
+import grammar.Grammar;
+import grammar.RHS;
+
 
 /*
  * The Earley parser in the schemachine.parser package is based on the code
@@ -151,7 +155,7 @@ public class EarleyParser {
 					System.out.println("initialized " + currentNode.data);
 				i = currentNode.numChildren-1;
 				currentNode = currentNode.getChild(i);
-				if(grammar.isPartOfSpeech(currentNode.parent.data)){
+				if(grammar.isPartOfSpeech(currentNode.parent.data.toString())){
 					currentNode.complete = true;
 					currentNode.parent.complete = true;
 				}

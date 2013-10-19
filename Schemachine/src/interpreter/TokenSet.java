@@ -2,6 +2,8 @@ package interpreter;
 
 import java.util.ArrayList;
 
+import parser.Keyword;
+
 public class TokenSet {
 
 	public ArrayList<Keyword> keywords;

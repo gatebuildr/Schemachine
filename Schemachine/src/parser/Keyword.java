@@ -1,4 +1,4 @@
-package interpreter;
+package parser;
 
 public enum Keyword {
 PERIOD,

@@ -1,4 +1,7 @@
-package parser;
+package earley;
+
+import grammar.RHS;
+
 
 
 /*

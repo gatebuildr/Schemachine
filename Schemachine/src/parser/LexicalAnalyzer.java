@@ -1,4 +1,6 @@
-package interpreter;
+package parser;
+
+import interpreter.TokenSet;
 
 public class LexicalAnalyzer {
 	private static final String SPLITREGEX = "([ \t]+)|(?=[.?])";

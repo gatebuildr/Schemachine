@@ -1,8 +1,13 @@
-package schema;
+package model;
 
 import static org.junit.Assert.*;
 
+
+import model.World;
+import model.WorldObject;
+
 import org.junit.Test;
+
 
 public class WorldTest {
 

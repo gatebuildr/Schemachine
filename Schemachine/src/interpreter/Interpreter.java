@@ -2,7 +2,13 @@ package interpreter;
 
 import java.util.Scanner;
 
-import schema.World;
+import model.World;
+
+import parser.LexicalAnalyzer;
+import parser.Parser;
+
+
+
 
 public class Interpreter {
 

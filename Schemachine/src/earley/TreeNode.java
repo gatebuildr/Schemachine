@@ -1,11 +1,11 @@
-package parser;
+package earley;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class TreeNode {
 
-	public String data;
+	public Object data;
 	private TreeNode[] children;
 	public int numChildren;
 	TreeNode parent;

@@ -1,4 +1,4 @@
-package parser;
+package grammar;
 
 /*
  * The Earley parser in the schemachine.parser package is based on the code
@@ -11,10 +11,11 @@ package parser;
 import java.util.HashMap;
 import java.util.Vector;
 
+
 public class Grammar 
 {
-	HashMap<String, RHS[]> rules;
-	Vector<String> POS;
+	protected HashMap<String, RHS[]> rules;
+	protected Vector<String> POS;
 	
 	public Grammar()
 	{

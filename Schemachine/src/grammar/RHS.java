@@ -1,4 +1,4 @@
-package parser;
+package grammar;
 
 /*
  * The Earley parser in the schemachine.parser package is based on the code

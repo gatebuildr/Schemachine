@@ -1,6 +1,7 @@
-package schema;
+package model;
 
 import java.util.HashSet;
+
 
 public class World {
 	

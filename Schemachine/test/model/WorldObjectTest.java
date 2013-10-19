@@ -1,7 +1,12 @@
-package schema;
+package model;
 import static org.junit.Assert.*;
 
+import model.NotAContainerException;
+import model.NotASupporterException;
+import model.WorldObject;
+
 import org.junit.Test;
+
 
 
 public class WorldObjectTest{

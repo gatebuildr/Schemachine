@@ -1,11 +1,17 @@
-package interpreter;
+package parser;
 
 import static org.junit.Assert.*;
+import interpreter.TokenSet;
+
+
+import model.World;
+import model.WorldObject;
 
 import org.junit.Test;
 
-import schema.World;
-import schema.WorldObject;
+import parser.LexicalAnalyzer;
+import parser.Parser;
+
 
 public class ParserTest {
 

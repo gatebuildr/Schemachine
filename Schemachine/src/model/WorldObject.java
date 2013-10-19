@@ -1,8 +1,9 @@
-package schema;
-import interpreter.Keyword;
-import interpreter.Quality;
+package model;
 
 import java.util.HashSet;
+
+import parser.Keyword;
+
 
 
 public class WorldObject {

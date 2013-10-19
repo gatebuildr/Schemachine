@@ -1,6 +1,7 @@
-package parser;
+package earley;
 
 import java.util.Vector;
+
 
 
 /*

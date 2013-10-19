@@ -1,8 +1,12 @@
-package interpreter;
+package parser;
 
 import static org.junit.Assert.*;
+import interpreter.TokenSet;
 
 import org.junit.Test;
+
+import parser.Keyword;
+import parser.LexicalAnalyzer;
 
 public class LexicalAnalyzerTest {
 
