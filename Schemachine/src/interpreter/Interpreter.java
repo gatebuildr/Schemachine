@@ -28,7 +28,7 @@ public class Interpreter {
 			
 			TokenSet tokens = LexicalAnalyzer.analyze(input);
 			
-			System.out.println("Tokens: " + tokens.keywords.toString());
+			System.out.println("Tokens: " + tokens.tokens.toString());
 			System.out.println("Names: " + tokens.names.toString());
 			
 			String output = parser.parse(tokens);

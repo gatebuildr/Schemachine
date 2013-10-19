@@ -11,6 +11,7 @@ import model.WorldObject;
 
 import earley.EarleyParser;
 import earley.TreeNode;
+import static grammar.Symbols.*;
 import grammar.WorldGrammar;
 
 
@@ -31,9 +32,9 @@ public class Parser {
 	public String parse(TokenSet tokens) {
 		nameIndex = 0;
 
-		String[] keywords = new String[tokens.keywords.size()];
+		String[] keywords = new String[tokens.tokens.size()];
 		for(int i=0; i<keywords.length; i++)
-			keywords[i] = tokens.keywords.get(i).toString();
+			keywords[i] = tokens.tokens.get(i).toString();
 		nameList = tokens.names.toArray(nameList);
 
 		if(!earley.parseSentence(keywords))
@@ -50,24 +51,24 @@ public class Parser {
 			System.out.println("\n");
 		}
 
-		if(root.data.equals("DECLARATION"))
+		if(root.data.equals(DECLARATION))
 			return parseDeclaration(root);
 
-		if(root.data.equals("QUESTION"))
+		if(root.data.equals(QUESTION))
 			return parseQuestion(root);
 
 		return SORRY;
 	}
 
 	private String parseQuestion(TreeNode root) {
-		if(root.numChildren == 2 && root.getChild(0).data.equals("OBJECT") && root.getChild(1).data.equals("?")){
+		if(root.numChildren == 2 && root.getChild(0).data.equals(OBJECT) && root.getChild(1).data.equals(QMARK)){
 			String name = nameList[nameIndex];
 			WorldObject object = findObject(root.getChild(0));
 			if(object == null)
 				return name + " does not exist.";
 			return name + " exists.";
 		}
-		if(root.numChildren == 4 && root.getChild(0).data.equals("IDENTITY") && root.getChild(1).data.equals("OBJECT") && root.getChild(2).data.equals("PREP_PHRASE")){
+		if(root.numChildren == 4 && root.getChild(0).data.equals(IDENTITY) && root.getChild(1).data.equals(OBJECT) && root.getChild(2).data.equals(PREP_PHRASE)){
 			String name = nameList[nameIndex];
 			WorldObject object = findObject(root.getChild(1));
 			if(object == null)
@@ -90,14 +91,14 @@ public class Parser {
 
 	private String parseDeclaration(TreeNode root) {
 
-		if(root.numChildren == 2 && root.getChild(0).data.equals("DECLARATION"))
+		if(root.numChildren == 2 && root.getChild(0).data.equals(DECLARATION))
 			return parseDeclaration(root.getChild(0));
 
-		if(root.numChildren == 1 && root.getChild(0).data.equals("OBJECT")){
+		if(root.numChildren == 1 && root.getChild(0).data.equals(OBJECT)){
 			WorldObject object = findOrCreateObject(root.getChild(0));
 			return object.getName();
 		}
-		if(root.numChildren == 3 && root.getChild(0).data.equals("OBJECT") && root.getChild(1).data.equals("IDENTITY") && root.getChild(2).data.equals("PREP_PHRASE")){
+		if(root.numChildren == 3 && root.getChild(0).data.equals(OBJECT) && root.getChild(1).data.equals(IDENTITY) && root.getChild(2).data.equals(PREP_PHRASE)){
 			WorldObject object = findOrCreateObject(root.getChild(0));
 			Quality[] qualityList = getQualities(root.getChild(2));
 			String out = object.getName() + " is ";
@@ -127,9 +128,9 @@ public class Parser {
 	private Quality[] getQualities(TreeNode prepPhraseRoot) {
 		return new Quality[]{new Quality(getPreposition(prepPhraseRoot.getChild(0)), findOrCreateObject(prepPhraseRoot.getChild(1)))};
 	}
-
-	private Keyword getPreposition(TreeNode prepRoot) {
-		return Keyword.valueOf(prepRoot.getChild(0).data.toString());
+	
+	private String getPreposition(TreeNode prepRoot){
+		return prepRoot.getChild(0).data.toString();
 	}
 
 	private WorldObject findOrCreateObject(TreeNode objectRoot) {

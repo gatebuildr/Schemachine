@@ -2,11 +2,12 @@ package earley;
 
 import grammar.Grammar;
 import grammar.WorldGrammar;
+import static grammar.Symbols.*;
 
 public class EarleyWorldTester {
 
 	public static void main(String[] args){
-		String[] sentence1 = {"NAME", "PERIOD"};
+		String[] sentence1 = {NAME, PERIOD};
 		Grammar grammar = new WorldGrammar();
 		EarleyParser parser = new EarleyParser(grammar);
 		test(sentence1, parser);

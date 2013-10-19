@@ -1,25 +1,19 @@
 package parser;
 
 import interpreter.TokenSet;
+import static grammar.Symbols.*;
 
 public class LexicalAnalyzer {
 	private static final String SPLITREGEX = "([ \t]+)|(?=[.?])";
 	
 	private static String nameBuffer = "";
 
-	private static Keyword identify(String token){
-		for(Keyword k : Keyword.values()){
-			if(k.name().equalsIgnoreCase(token))
-				return k;
-		}
+	private static String identify(String token){
+		for(String s : SYMBOL_LIST)
+			if(s.equals(token))
+				return token;
 		
-		// punctuation can't be matched to keywords in the same way
-		if(token.equals("."))
-			return Keyword.PERIOD;
-		if(token.equals("?"))
-			return Keyword.QUERY;
-		
-		return Keyword.NAME;
+		return NAME;
 	}
 	
 	public static TokenSet analyze(String input){
@@ -32,12 +26,12 @@ public class LexicalAnalyzer {
 			if(sToken.equals(""))
 				continue;
 			
-			Keyword keyword = identify(sToken);
-			if(keyword == Keyword.NAME)
+			String keyword = identify(sToken);
+			if(keyword.equals(NAME))
 				nameBuffer += " " + sToken;
 			else{
 				emptyBuffer(tokenSet);				
-				tokenSet.keywords.add(keyword);
+				tokenSet.tokens.add(keyword);
 			}
 		}
 		
@@ -48,7 +42,7 @@ public class LexicalAnalyzer {
 
 	private static void emptyBuffer(TokenSet tokenSet) {
 		if(nameBuffer.length() > 0){
-			tokenSet.keywords.add(Keyword.NAME);
+			tokenSet.tokens.add(NAME);
 			tokenSet.names.add(nameBuffer.trim());
 			nameBuffer = "";
 		}

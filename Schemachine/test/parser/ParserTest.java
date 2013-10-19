@@ -24,13 +24,12 @@ public class ParserTest {
 	private final String DENY_REVERSE_CONTAINMENT = "No, container is not in object.";
 	
 	private final TokenSet emptySet = new TokenSet();
-	LexicalAnalyzer analyzer = new LexicalAnalyzer();
-	private final TokenSet declarationSet = analyzer.analyze(OBJECT + " .");
-	private final TokenSet containerDeclarationSet = analyzer.analyze(OBJECT + " is in " + CONTAINER + ".");
-	private final TokenSet containerQuerySet = analyzer.analyze("Is " + OBJECT + " in " + CONTAINER + "?");
-	private final TokenSet reverseContainerQuerySet = analyzer.analyze("Is " + CONTAINER + " in " + OBJECT + "?");
-	private final TokenSet supporterDeclarationSet = analyzer.analyze(OBJECT + " is on " + SUPPORTER + ".");
-	private final TokenSet querySet = analyzer.analyze(OBJECT + "?");
+	private final TokenSet declarationSet = LexicalAnalyzer.analyze(OBJECT + " .");
+	private final TokenSet containerDeclarationSet = LexicalAnalyzer.analyze(OBJECT + " is in " + CONTAINER + ".");
+	private final TokenSet containerQuerySet = LexicalAnalyzer.analyze("Is " + OBJECT + " in " + CONTAINER + "?");
+	private final TokenSet reverseContainerQuerySet = LexicalAnalyzer.analyze("Is " + CONTAINER + " in " + OBJECT + "?");
+	private final TokenSet supporterDeclarationSet = LexicalAnalyzer.analyze(OBJECT + " is on " + SUPPORTER + ".");
+	private final TokenSet querySet = LexicalAnalyzer.analyze(OBJECT + "?");
 	
 	@Test
 	public void testIgnoreEmptySet() {

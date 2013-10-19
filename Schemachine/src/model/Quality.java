@@ -1,11 +1,9 @@
 package model;
 
-import parser.Keyword;
-
 public class Quality {
-	public Keyword prep;
+	public String prep;
 	public WorldObject object;
-	public Quality(Keyword prep, WorldObject object) {
+	public Quality(String prep, WorldObject object) {
 		this.prep = prep;
 		this.object = object;
 	}
@@ -13,5 +11,4 @@ public class Quality {
 	public String toString(){
 		return prep.toString().toLowerCase() + " " + object;
 	}
-	
 }

@@ -1,11 +1,11 @@
 package parser;
 
 import static org.junit.Assert.*;
+import static grammar.Symbols.*;
 import interpreter.TokenSet;
 
 import org.junit.Test;
 
-import parser.Keyword;
 import parser.LexicalAnalyzer;
 
 public class LexicalAnalyzerTest {
@@ -15,7 +15,7 @@ public class LexicalAnalyzerTest {
 	private final String DECLARATION = "object.";
 	
 	private final TokenSet emptySet = new TokenSet();
-	private final TokenSet declarationSet = new TokenSet(new Keyword[]{Keyword.NAME, Keyword.PERIOD}, new String[]{OBJECT});
+	private final TokenSet declarationSet = new TokenSet(new String[]{NAME, PERIOD}, new String[] {OBJECT});
 	
 	@Test
 	public void testEmptyString() {
@@ -26,5 +26,4 @@ public class LexicalAnalyzerTest {
 	public void testDeclaration() {
 		assertEquals(LexicalAnalyzer.analyze(DECLARATION), declarationSet);
 	}
-
 }

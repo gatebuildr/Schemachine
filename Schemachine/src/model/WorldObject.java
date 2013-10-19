@@ -1,11 +1,8 @@
 package model;
 
+import static grammar.Symbols.*;
+
 import java.util.HashSet;
-
-import parser.Keyword;
-
-
-
 public class WorldObject {
 
 	private String name;
@@ -14,7 +11,7 @@ public class WorldObject {
 	private HashSet<WorldObject> contents;
 	private HashSet<WorldObject> burdens;
 	private boolean frozen;
-	
+
 	public WorldObject(String name) {
 		this.name = name;
 		this.contents = new HashSet<WorldObject>();
@@ -37,7 +34,6 @@ public class WorldObject {
 		if(!isContainer()){
 			throw new NotAContainerException();
 		}
-		
 	}
 
 	public void getEncumbrance() throws NotASupporterException {
@@ -50,9 +46,9 @@ public class WorldObject {
 		if(!isSupporter)
 			if(frozen)
 				throw new NotASupporterException();
-			isSupporter = true;
+		isSupporter = true;
 		burdens.add(burden);
-		
+
 	}
 
 	public void addContents(WorldObject content) throws NotAContainerException {
@@ -92,6 +88,7 @@ public class WorldObject {
 	}
 
 	public void setQuality(Quality q) {
+
 		switch(q.prep){
 		case IN:
 			try {
@@ -111,7 +108,7 @@ public class WorldObject {
 			throw new RuntimeException("Unknown preposition " + q.prep);
 		}		
 	}
-	
+
 	public String toString(){
 		return name;
 	}

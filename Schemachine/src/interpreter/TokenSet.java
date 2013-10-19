@@ -2,22 +2,21 @@ package interpreter;
 
 import java.util.ArrayList;
 
-import parser.Keyword;
 
 public class TokenSet {
 
-	public ArrayList<Keyword> keywords;
+	public ArrayList<String> tokens;
 	public ArrayList<String> names;
 	
 	public TokenSet(){
-		keywords = new ArrayList<Keyword>();
+		tokens = new ArrayList<String>();
 		names = new ArrayList<String>();
 	}
 	
-	public TokenSet(Keyword[] keywords, String[] names){
+	public TokenSet(String[] tokens, String[] names){
 		this();
-		for(Keyword k : keywords)
-			this.keywords.add(k);
+		for(String s : tokens)
+			this.tokens.add(s);
 		for(String n : names)
 			this.names.add(n);
 	}
@@ -26,6 +25,6 @@ public class TokenSet {
 		if(! (other instanceof TokenSet))
 			return false;
 		TokenSet ts = (TokenSet)other;
-		return this.keywords.equals(ts.keywords) && this.names.equals(ts.names);
+		return this.tokens.equals(ts.tokens) && this.names.equals(ts.names);
 	}
 }

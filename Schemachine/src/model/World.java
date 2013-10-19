@@ -35,5 +35,4 @@ public class World {
 				return object;
 		return null;
 	}
-	
 }
