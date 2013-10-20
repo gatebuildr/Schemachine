@@ -32,7 +32,42 @@ public class WorldObjectTest{
 	}
 	
 	@Test
-	public void testRecursiveContainment(){
+	public void testAddBurden(){
+		WorldObject object = new WorldObject(NAME_1);
+		WorldObject burden = new WorldObject(BURDEN);
+		object.addBurden(burden);
+		assertTrue(object.supports(burden));
+		assertTrue(object.isSupporter());
+	}
+
+	@Test
+	public void testRemoveContents(){
+		WorldObject object = new WorldObject(NAME_1);
+		WorldObject content = new WorldObject(CONTENT);
+		object.addContents(content);
+		assertTrue(object.contains(content));
+		object.removeContents(content);
+		assertFalse(object.contains(content));
+		assertTrue(object.isEmpty());
+	}
+
+	@Test
+	public void testRemoveBurden(){
+		WorldObject object = new WorldObject(NAME_1);
+		WorldObject burden = new WorldObject(BURDEN);
+		object.addBurden(burden);
+		object.removeBurden(burden);
+		assertFalse(object.supports(burden));
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void testContainerLoop(){
+		WorldObject object = new WorldObject(NAME_1);
+		object.addContents(object);
+	}
+	
+	@Test
+	public void testSelfContainment(){
 		WorldObject object = new WorldObject(NAME_1);
 		WorldObject content = new WorldObject(CONTENT);
 		WorldObject container = new WorldObject(CONTAINER);
@@ -41,6 +76,14 @@ public class WorldObjectTest{
 		assertTrue(object.contains(content));
 		assertTrue(container.contains(object));
 		assertTrue(container.contains(content));
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void testRecursiveContainment(){
+		WorldObject content = new WorldObject(CONTENT);
+		WorldObject container = new WorldObject(CONTAINER);
+		container.addContents(content);
+		content.addContents(container);
 	}
 	
 	@Test
@@ -56,31 +99,15 @@ public class WorldObjectTest{
 	}
 	
 	@Test
-	public void testRemoveContents(){
-		WorldObject object = new WorldObject(NAME_1);
+	public void testContainmentSupportStacking(){
 		WorldObject content = new WorldObject(CONTENT);
+		WorldObject container = new WorldObject(CONTAINER);
+		WorldObject object = new WorldObject(NAME_1);
+		WorldObject base = new WorldObject(BASE);
 		object.addContents(content);
-		assertTrue(object.contains(content));
-		object.removeContents(content);
-		assertFalse(object.contains(content));
-		assertTrue(object.isEmpty());
-	}
-	
-	@Test
-	public void testAddBurden(){
-		WorldObject object = new WorldObject(NAME_1);
-		WorldObject burden = new WorldObject(BURDEN);
-		object.addBurden(burden);
-		assertTrue(object.supports(burden));
-		assertTrue(object.isSupporter());
-	}
-		
-	@Test
-	public void testRemoveBurden(){
-		WorldObject object = new WorldObject(NAME_1);
-		WorldObject burden = new WorldObject(BURDEN);
-		object.addBurden(burden);
-		object.removeBurden(burden);
-		assertFalse(object.supports(burden));
+		base.addBurden(object);
+		assertTrue(base.supports(content));
+		container.addContents(base);
+		assertTrue(container.contains(content));
 	}
 }

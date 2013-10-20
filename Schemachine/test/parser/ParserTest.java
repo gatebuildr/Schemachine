@@ -22,11 +22,14 @@ public class ParserTest {
 	private final String DENY_PRESENCE = "object does not exist.";
 	private final String AFFIRM_CONTAINMENT = "Yes, object is in container.";
 	private final String DENY_REVERSE_CONTAINMENT = "No, container is not in object.";
+	private final String IDENTIFIED_CONTENT = "object is in container.";
+	private final String FAILED_TO_IDENTIFY_CONTENT = "nothing is in container.";
 	
 	private final TokenSet emptySet = new TokenSet();
 	private final TokenSet declarationSet = LexicalAnalyzer.analyze(OBJECT + " .");
 	private final TokenSet containerDeclarationSet = LexicalAnalyzer.analyze(OBJECT + " is in " + CONTAINER + ".");
 	private final TokenSet containerQuerySet = LexicalAnalyzer.analyze("Is " + OBJECT + " in " + CONTAINER + "?");
+	private final TokenSet identifyContentSet = LexicalAnalyzer.analyze("What is in " + CONTAINER + "?");
 	private final TokenSet reverseContainerQuerySet = LexicalAnalyzer.analyze("Is " + CONTAINER + " in " + OBJECT + "?");
 	private final TokenSet supporterDeclarationSet = LexicalAnalyzer.analyze(OBJECT + " is on " + SUPPORTER + ".");
 	private final TokenSet querySet = LexicalAnalyzer.analyze(OBJECT + "?");
@@ -84,6 +87,15 @@ public class ParserTest {
 		parser.parse(containerDeclarationSet);
 		assertEquals(parser.parse(containerQuerySet), AFFIRM_CONTAINMENT);
 		assertEquals(parser.parse(reverseContainerQuerySet), DENY_REVERSE_CONTAINMENT);
+	}
+	
+	@Test
+	public void testIdentifyContent(){
+		World world = new World();
+		Parser parser = new Parser(world);
+		assertEquals(parser.parse(identifyContentSet), FAILED_TO_IDENTIFY_CONTENT);
+		parser.parse(containerDeclarationSet);
+		assertEquals(parser.parse(identifyContentSet), IDENTIFIED_CONTENT);
 	}
 	
 	@Test

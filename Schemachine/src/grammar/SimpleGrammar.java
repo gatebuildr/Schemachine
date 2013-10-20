@@ -30,7 +30,6 @@ public class SimpleGrammar extends Grammar {
 	 RHS[] npRHS = {new RHS(np1), new RHS(np2)};
 	 rules.put ("NP", npRHS); 
 	 String[] vp1 = {"Verb","NP"}; 
-	 String[] vp2 = {"VP", "PP"}; 
 	 RHS[] vpRHS = {new RHS(vp1)};
 	 rules.put ("VP", vpRHS); 
 	 String[] pp1 = {"Prep","NP"}; 

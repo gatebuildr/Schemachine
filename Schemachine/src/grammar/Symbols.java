@@ -14,7 +14,8 @@ public class Symbols {
 	public static final String PREPOSITION = "PREP";
 	public static final String QMARK = "?";
 	public static final String QUESTION = "QUESTION";
+	public static final String WHAT = "what";
 
-	public static final String[] SYMBOL_LIST = {DECLARATION, IDENTITY, IN, IS, NAME, OBJECT, ON, PERIOD, PREP_PHRASE, PREPOSITION, QMARK, QUESTION};
+	public static final String[] SYMBOL_LIST = {DECLARATION, IDENTITY, IN, IS, NAME, OBJECT, ON, PERIOD, PREP_PHRASE, PREPOSITION, QMARK, QUESTION, WHAT};
 	
 }

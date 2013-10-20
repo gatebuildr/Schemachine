@@ -81,7 +81,6 @@ public class EarleyParser {
 	private void scan(State s){
 		String lhs = s.getAfterDot();
 		RHS[] rhs = grammar.getRHS(lhs);
-		int i = s.getI();
 		int j = s.getJ();
 		for(int a=0; a<rhs.length; a++){
 			String[] terms = rhs[a].getTerms();

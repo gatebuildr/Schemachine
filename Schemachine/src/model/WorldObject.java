@@ -21,6 +21,21 @@ public class WorldObject {
 		return isContainer;
 	}
 
+	public HashSet<WorldObject> getContents(){
+		return contents;
+	}
+
+	public void addContents(WorldObject content){
+		if(content == this || content.contains(this))
+			throw new RuntimeException("Objects cannot contain themselves.");
+		contents.add(content);
+		isContainer = true;
+	}
+
+	public void removeContents(WorldObject content) {
+		contents.remove(content);
+	}
+
 	public boolean isSupporter() {
 		return isSupporter;
 	}
@@ -29,22 +44,15 @@ public class WorldObject {
 		return name;
 	}
 
-	public HashSet<WorldObject> getContents(){
-		return contents;
-	}
-
 	public HashSet<WorldObject> getBurdens(){
 		return burdens;
 	}
 
 	public void addBurden(WorldObject burden){
+		if(burden == this || burden.supports(this))
+			throw new RuntimeException("Objects cannot support themselves.");
 		isSupporter = true;
 		burdens.add(burden);
-	}
-
-	public void addContents(WorldObject content){
-		isContainer = true;
-		contents.add(content);
 	}
 
 	public boolean contains(WorldObject content) {
@@ -53,14 +61,10 @@ public class WorldObject {
 		if(contents.contains(content))
 			return true;
 		for(WorldObject recursiveContainer : contents){
-			if(recursiveContainer.contains(content))
+			if(recursiveContainer.contains(content) || recursiveContainer.supports(content))
 				return true;
 		}
 		return false;
-	}
-
-	public void removeContents(WorldObject content) {
-		contents.remove(content);
 	}
 
 	public boolean isEmpty() {
@@ -73,13 +77,24 @@ public class WorldObject {
 		if(burdens.contains(burden))
 			return true;
 		for(WorldObject recursiveSupporter : burdens)
-			if(recursiveSupporter.supports(burden))
+			if(recursiveSupporter.supports(burden) || recursiveSupporter.contains(burden))
 				return true;
 		return false;
 	}
 
 	public void removeBurden(WorldObject burden) {
 		burdens.remove(burden);
+	}
+
+	public boolean checkQuality(Quality q) {
+		switch(q.prep){
+		case IN:
+			return q.object.contains(this);
+		case ON:
+			return q.object.supports(this);
+		default:
+			throw new RuntimeException("Unknown preposition " + q.prep);
+		}		
 	}
 
 	public void setQuality(Quality q) {
@@ -100,14 +115,11 @@ public class WorldObject {
 		return name;
 	}
 
-	public boolean checkQuality(Quality q) {
-		switch(q.prep){
-		case IN:
-			return q.object.contains(this);
-		case ON:
-			return q.object.supports(this);
-		default:
-			throw new RuntimeException("Unknown preposition " + q.prep);
-		}		
+	public boolean hasQualities(Quality[] qList) {
+		for(Quality q : qList){
+			if(!checkQuality(q))
+				return false;
+		}
+		return true;
 	}
 }

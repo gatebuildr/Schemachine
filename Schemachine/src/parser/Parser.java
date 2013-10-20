@@ -2,8 +2,6 @@ package parser;
 
 import interpreter.TokenSet;
 
-import java.util.ArrayList;
-
 import model.Quality;
 import model.World;
 import model.WorldObject;
@@ -16,7 +14,9 @@ import grammar.WorldGrammar;
 
 
 public class Parser {
+	private static final String SORRY_QUESTION = "Sorry, I didn't understand your question.";
 	private static final String SORRY = "Sorry, I didn't understand that statement.";
+	private static final String SORRY_PARSE = "Sorry, I couldn't parse that statement.";
 	private World world;
 	private EarleyParser earley;
 	private String[] nameList;
@@ -38,11 +38,16 @@ public class Parser {
 		nameList = tokens.names.toArray(nameList);
 
 		if(!earley.parseSentence(keywords))
-			return SORRY;
+			return SORRY_PARSE;
 		TreeNode root = earley.buildTree();
 		root = root.getChild(0).getChild(0);
 
+		try{
 		return parseSentence(root);
+		}
+		catch(RuntimeException e){
+			return "Error: " + e.getMessage();
+		}
 	}
 
 	private String parseSentence(TreeNode root) {
@@ -81,7 +86,20 @@ public class Parser {
 			}
 			return "Yes, " + object.getName() + " is " + qualityListToString(qualities) + ".";
 		}
-		return SORRY;
+		
+		if(root.numChildren == 4 && root.getChild(0).data.equals(WHAT) && root.getChild(1).data.equals(IDENTITY) && root.getChild(2).data.equals(PREP_PHRASE) && root.getChild(3).data.equals(QMARK)){
+			Quality[] qList = getQualities(root.getChild(2));
+			WorldObject[] matches = world.findMatchingObjects(qList);
+			if(matches.length == 0){
+				return "nothing is " + qualityListToString(qList) + ".";
+			}
+			if(matches.length == 1){
+				return matches[0].getName() + " is " + qualityListToString(qList) + ".";
+			}
+			return "Whoop, it's that new thing";
+		}
+		
+		return SORRY_QUESTION;
 	}
 
 	private WorldObject findObject(TreeNode objectNode) {

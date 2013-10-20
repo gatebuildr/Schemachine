@@ -19,6 +19,7 @@ public class WorldGrammar extends Grammar {
 		POS.add(QMARK);
 		POS.add(IDENTITY);
 		POS.add(PREPOSITION);
+		POS.add(WHAT);
 	}
 
 	private void initRules() {
@@ -35,7 +36,8 @@ public class WorldGrammar extends Grammar {
 		
 		String[] question1 = {OBJECT, QMARK};
 		String[] question2 = {IDENTITY, OBJECT, PREP_PHRASE, QMARK};
-		RHS[] questionRHS = {new RHS(question1), new RHS(question2)};
+		String[] question3 = {WHAT, IDENTITY, PREP_PHRASE, QMARK};
+		RHS[] questionRHS = {new RHS(question1), new RHS(question2), new RHS(question3)};
 		rules.put(QUESTION, questionRHS);
 		
 		String[] n1 = {NAME};
@@ -50,17 +52,21 @@ public class WorldGrammar extends Grammar {
 		RHS[] qRHS = {new RHS(q1)};
 		rules.put(QMARK, qRHS);
 		
+		String[] what = {WHAT};
+		RHS[] whatRHS = {new RHS(what)};
+		rules.put(WHAT, whatRHS);
+		
 		String[] i1 = {IS};
 		RHS[] identityRHS = {new RHS(i1)};
-		rules.put(Symbols.IDENTITY, identityRHS);
+		rules.put(IDENTITY, identityRHS);
 		
 		String[] pp1 = {PREPOSITION, OBJECT};
 		RHS[] prepPhraseRHS = {new RHS(pp1)};
-		rules.put(Symbols.PREP_PHRASE, prepPhraseRHS);
+		rules.put(PREP_PHRASE, prepPhraseRHS);
 		
 		String[] prepIn = {IN};
 		String[] prepOn = {ON};
 		RHS[] prepRHS = {new RHS(prepIn), new RHS(prepOn)};
-		rules.put(Symbols.PREPOSITION, prepRHS);
+		rules.put(PREPOSITION, prepRHS);
 	}
 }

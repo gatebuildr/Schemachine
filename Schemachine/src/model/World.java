@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 
@@ -34,5 +35,14 @@ public class World {
 			if(object.getName().equals(name))
 				return object;
 		return null;
+	}
+
+	public WorldObject[] findMatchingObjects(Quality[] qList) {
+		ArrayList<WorldObject> matches = new ArrayList<WorldObject>();
+		for(WorldObject object : objects){
+			if(object.hasQualities(qList))
+				matches.add(object);
+		}
+		return matches.toArray(new WorldObject[0]);
 	}
 }
