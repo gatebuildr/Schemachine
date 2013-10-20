@@ -1,13 +1,9 @@
 package model;
-import static org.junit.Assert.*;
 
-import model.NotAContainerException;
-import model.NotASupporterException;
+import static org.junit.Assert.*;
 import model.WorldObject;
 
 import org.junit.Test;
-
-
 
 public class WorldObjectTest{
 
@@ -25,21 +21,9 @@ public class WorldObjectTest{
 		assertFalse(object.isSupporter());
 		assertFalse(object.contains(object));
 	}
-	
-	@Test(expected = NotAContainerException.class)
-	public void testNotContainer() throws NotAContainerException{
-		WorldObject object = new WorldObject(NAME_1);
-		object.getContents();
-	}
-	
-	@Test(expected = NotASupporterException.class)
-	public void testNotSupporter() throws NotASupporterException{
-		WorldObject object = new WorldObject(NAME_1);
-		object.getEncumbrance();
-	}
-	
+		
 	@Test
-	public void testAddContents() throws NotAContainerException{
+	public void testAddContents(){
 		WorldObject object = new WorldObject(NAME_1);
 		WorldObject content = new WorldObject(CONTENT);
 		object.addContents(content);
@@ -48,7 +32,7 @@ public class WorldObjectTest{
 	}
 	
 	@Test
-	public void testRecursiveContainment() throws NotAContainerException{
+	public void testRecursiveContainment(){
 		WorldObject object = new WorldObject(NAME_1);
 		WorldObject content = new WorldObject(CONTENT);
 		WorldObject container = new WorldObject(CONTAINER);
@@ -60,7 +44,7 @@ public class WorldObjectTest{
 	}
 	
 	@Test
-	public void testRecursiveSupport() throws NotASupporterException{
+	public void testRecursiveSupport(){
 		WorldObject object = new WorldObject(NAME_1);
 		WorldObject burden = new WorldObject(BURDEN);
 		WorldObject base = new WorldObject(BASE);
@@ -71,16 +55,8 @@ public class WorldObjectTest{
 		assertTrue(base.supports(burden));
 	}
 	
-	@Test(expected = NotAContainerException.class)
-	public void testAddContentsToFrozenObject() throws NotAContainerException{
-		WorldObject object = new WorldObject(NAME_1);
-		WorldObject contents = new WorldObject(CONTENT);
-		object.freeze();
-		object.addContents(contents);
-	}
-	
 	@Test
-	public void testRemoveContents() throws NotAContainerException{
+	public void testRemoveContents(){
 		WorldObject object = new WorldObject(NAME_1);
 		WorldObject content = new WorldObject(CONTENT);
 		object.addContents(content);
@@ -91,24 +67,16 @@ public class WorldObjectTest{
 	}
 	
 	@Test
-	public void testAddBurden() throws NotASupporterException{
+	public void testAddBurden(){
 		WorldObject object = new WorldObject(NAME_1);
 		WorldObject burden = new WorldObject(BURDEN);
 		object.addBurden(burden);
 		assertTrue(object.supports(burden));
 		assertTrue(object.isSupporter());
 	}
-	
-	@Test(expected = NotASupporterException.class)
-	public void testAddBurdenToFrozenObject() throws NotASupporterException{
-		WorldObject object = new WorldObject(NAME_1);
-		WorldObject burden = new WorldObject(BURDEN);
-		object.freeze();
-		object.addBurden(burden);
-	}
-	
+		
 	@Test
-	public void testRemoveBurden() throws NotASupporterException{
+	public void testRemoveBurden(){
 		WorldObject object = new WorldObject(NAME_1);
 		WorldObject burden = new WorldObject(BURDEN);
 		object.addBurden(burden);

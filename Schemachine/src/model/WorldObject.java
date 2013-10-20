@@ -10,7 +10,6 @@ public class WorldObject {
 	private boolean isSupporter;
 	private HashSet<WorldObject> contents;
 	private HashSet<WorldObject> burdens;
-	private boolean frozen;
 
 	public WorldObject(String name) {
 		this.name = name;
@@ -30,34 +29,21 @@ public class WorldObject {
 		return name;
 	}
 
-	public void getContents() throws NotAContainerException {
-		if(!isContainer()){
-			throw new NotAContainerException();
-		}
+	public HashSet<WorldObject> getContents(){
+		return contents;
 	}
 
-	public void getEncumbrance() throws NotASupporterException {
-		if(!isSupporter){
-			throw new NotASupporterException();
-		}
+	public HashSet<WorldObject> getBurdens(){
+		return burdens;
 	}
 
-	public void addBurden(WorldObject burden) throws NotASupporterException {
-		if(!isSupporter)
-			if(frozen)
-				throw new NotASupporterException();
+	public void addBurden(WorldObject burden){
 		isSupporter = true;
 		burdens.add(burden);
-
 	}
 
-	public void addContents(WorldObject content) throws NotAContainerException {
-		if(!isContainer){
-			if(frozen){
-				throw new NotAContainerException();
-			}
-			isContainer = true;
-		}
+	public void addContents(WorldObject content){
+		isContainer = true;
 		contents.add(content);
 	}
 
@@ -81,10 +67,6 @@ public class WorldObject {
 		return true;
 	}
 
-	public void freeze() {
-		frozen = true;
-	}
-
 	public boolean supports(WorldObject burden) {
 		if(!isSupporter)
 			return false;
@@ -104,19 +86,11 @@ public class WorldObject {
 
 		switch(q.prep){
 		case IN:
-			try {
-				q.object.addContents(this);
-			} catch (NotAContainerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} break;
+			q.object.addContents(this);
+			break;
 		case ON:
-			try {
-				q.object.addBurden(this);
-			} catch (NotASupporterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} break;
+			q.object.addBurden(this);
+			break;
 		default:
 			throw new RuntimeException("Unknown preposition " + q.prep);
 		}		
