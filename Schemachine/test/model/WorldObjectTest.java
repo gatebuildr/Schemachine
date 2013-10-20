@@ -14,6 +14,8 @@ public class WorldObjectTest{
 	final String NAME_1 = "Object 1";
 	final String BURDEN = "Burden";
 	final String CONTENT = "Content";
+	final String CONTAINER = "Container";
+	final String BASE = "Base";
 	
 	@Test
 	public void testInit(){
@@ -43,6 +45,30 @@ public class WorldObjectTest{
 		object.addContents(content);
 		assertTrue(object.isContainer());
 		assertTrue(object.contains(content));
+	}
+	
+	@Test
+	public void testRecursiveContainment() throws NotAContainerException{
+		WorldObject object = new WorldObject(NAME_1);
+		WorldObject content = new WorldObject(CONTENT);
+		WorldObject container = new WorldObject(CONTAINER);
+		object.addContents(content);
+		container.addContents(object);
+		assertTrue(object.contains(content));
+		assertTrue(container.contains(object));
+		assertTrue(container.contains(content));
+	}
+	
+	@Test
+	public void testRecursiveSupport() throws NotASupporterException{
+		WorldObject object = new WorldObject(NAME_1);
+		WorldObject burden = new WorldObject(BURDEN);
+		WorldObject base = new WorldObject(BASE);
+		object.addBurden(burden);
+		base.addBurden(object);
+		assertTrue(object.supports(burden));
+		assertTrue(base.supports(object));
+		assertTrue(base.supports(burden));
 	}
 	
 	@Test(expected = NotAContainerException.class)

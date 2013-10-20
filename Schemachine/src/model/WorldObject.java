@@ -64,7 +64,13 @@ public class WorldObject {
 	public boolean contains(WorldObject content) {
 		if(!isContainer)
 			return false;
-		return contents.contains(content);
+		if(contents.contains(content))
+			return true;
+		for(WorldObject recursiveContainer : contents){
+			if(recursiveContainer.contains(content))
+				return true;
+		}
+		return false;
 	}
 
 	public void removeContents(WorldObject content) {
@@ -80,7 +86,14 @@ public class WorldObject {
 	}
 
 	public boolean supports(WorldObject burden) {
-		return burdens.contains(burden);
+		if(!isSupporter)
+			return false;
+		if(burdens.contains(burden))
+			return true;
+		for(WorldObject recursiveSupporter : burdens)
+			if(recursiveSupporter.supports(burden))
+				return true;
+		return false;
 	}
 
 	public void removeBurden(WorldObject burden) {

@@ -41,5 +41,4 @@ public class WorldTest {
 		World world = new World();
 		assertNull(world.findObject(OBJECT_NAME));
 	}
-
 }

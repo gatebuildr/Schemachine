@@ -7,9 +7,6 @@ import model.World;
 import parser.LexicalAnalyzer;
 import parser.Parser;
 
-
-
-
 public class Interpreter {
 
 	private static final String WELCOME = "Welcome to the Schemachine interpreter! Type 'exit' to quit.";
