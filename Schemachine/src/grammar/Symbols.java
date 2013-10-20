@@ -3,7 +3,6 @@ package grammar;
 public class Symbols {
 
 	public static final String DECLARATION = "DECLARATION";
-	public static final String IDENTITY = "IDENTITY";
 	public static final String IN = "in";
 	public static final String IS = "is";
 	public static final String NAME = "NAME";
@@ -15,7 +14,8 @@ public class Symbols {
 	public static final String QMARK = "?";
 	public static final String QUESTION = "QUESTION";
 	public static final String WHAT = "what";
+	public static final String AND = "and";
 
-	public static final String[] SYMBOL_LIST = {DECLARATION, IDENTITY, IN, IS, NAME, OBJECT, ON, PERIOD, PREP_PHRASE, PREPOSITION, QMARK, QUESTION, WHAT};
+	public static final String[] SYMBOL_LIST = {DECLARATION, IN, IS, NAME, OBJECT, ON, PERIOD, PREP_PHRASE, PREPOSITION, QMARK, QUESTION, WHAT, AND};
 	
 }

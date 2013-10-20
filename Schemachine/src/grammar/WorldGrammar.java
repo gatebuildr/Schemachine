@@ -17,7 +17,7 @@ public class WorldGrammar extends Grammar {
 		POS.add(OBJECT);
 		POS.add(PERIOD);
 		POS.add(QMARK);
-		POS.add(IDENTITY);
+		POS.add(IS);
 		POS.add(PREPOSITION);
 		POS.add(WHAT);
 	}
@@ -30,13 +30,13 @@ public class WorldGrammar extends Grammar {
 		
 		String[] declaration0 = {DECLARATION, PERIOD};
 		String[] declaration1 = {OBJECT};
-		String[] declaration2 = {OBJECT, IDENTITY, PREP_PHRASE};
+		String[] declaration2 = {OBJECT, IS, PREP_PHRASE};
 		RHS[] statementRHS = {new RHS(declaration0), new RHS(declaration1), new RHS(declaration2)};
 		rules.put(DECLARATION, statementRHS);
 		
 		String[] question1 = {OBJECT, QMARK};
-		String[] question2 = {IDENTITY, OBJECT, PREP_PHRASE, QMARK};
-		String[] question3 = {WHAT, IDENTITY, PREP_PHRASE, QMARK};
+		String[] question2 = {IS, OBJECT, PREP_PHRASE, QMARK};
+		String[] question3 = {WHAT, IS, PREP_PHRASE, QMARK};
 		RHS[] questionRHS = {new RHS(question1), new RHS(question2), new RHS(question3)};
 		rules.put(QUESTION, questionRHS);
 		
@@ -58,7 +58,7 @@ public class WorldGrammar extends Grammar {
 		
 		String[] i1 = {IS};
 		RHS[] identityRHS = {new RHS(i1)};
-		rules.put(IDENTITY, identityRHS);
+		rules.put(IS, identityRHS);
 		
 		String[] pp1 = {PREPOSITION, OBJECT};
 		RHS[] prepPhraseRHS = {new RHS(pp1)};

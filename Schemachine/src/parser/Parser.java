@@ -73,7 +73,7 @@ public class Parser {
 				return name + " does not exist.";
 			return name + " exists.";
 		}
-		if(root.numChildren == 4 && root.getChild(0).data.equals(IDENTITY) && root.getChild(1).data.equals(OBJECT) && root.getChild(2).data.equals(PREP_PHRASE)){
+		if(root.numChildren == 4 && root.getChild(0).data.equals(IS) && root.getChild(1).data.equals(OBJECT) && root.getChild(2).data.equals(PREP_PHRASE)){
 			String name = nameList[nameIndex];
 			WorldObject object = findObject(root.getChild(1));
 			if(object == null)
@@ -87,7 +87,7 @@ public class Parser {
 			return "Yes, " + object.getName() + " is " + qualityListToString(qualities) + ".";
 		}
 		
-		if(root.numChildren == 4 && root.getChild(0).data.equals(WHAT) && root.getChild(1).data.equals(IDENTITY) && root.getChild(2).data.equals(PREP_PHRASE) && root.getChild(3).data.equals(QMARK)){
+		if(root.numChildren == 4 && root.getChild(0).data.equals(WHAT) && root.getChild(1).data.equals(IS) && root.getChild(2).data.equals(PREP_PHRASE) && root.getChild(3).data.equals(QMARK)){
 			Quality[] qList = getQualities(root.getChild(2));
 			WorldObject[] matches = world.findMatchingObjects(qList);
 			if(matches.length == 0){
@@ -116,7 +116,7 @@ public class Parser {
 			WorldObject object = findOrCreateObject(root.getChild(0));
 			return object.getName();
 		}
-		if(root.numChildren == 3 && root.getChild(0).data.equals(OBJECT) && root.getChild(1).data.equals(IDENTITY) && root.getChild(2).data.equals(PREP_PHRASE)){
+		if(root.numChildren == 3 && root.getChild(0).data.equals(OBJECT) && root.getChild(1).data.equals(IS) && root.getChild(2).data.equals(PREP_PHRASE)){
 			WorldObject object = findOrCreateObject(root.getChild(0));
 			Quality[] qualityList = getQualities(root.getChild(2));
 			String out = object.getName() + " is ";
