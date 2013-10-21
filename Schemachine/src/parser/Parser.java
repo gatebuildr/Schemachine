@@ -96,10 +96,18 @@ public class Parser {
 			if(matches.length == 1){
 				return matches[0].getName() + " is " + qualityListToString(qList) + ".";
 			}
-			return "Whoop, it's that new thing";
+			return objectListToString(matches) + " are " + qualityListToString(qList) + ".";
 		}
 		
 		return SORRY_QUESTION;
+	}
+
+	private String objectListToString(WorldObject[] matches) {
+		String list = matches[0].getName();
+		for(int i=1; i<matches.length-1; i++)
+			list += ", " + matches[i].getName();
+		list += " and " + matches[matches.length-1];
+		return list;
 	}
 
 	private WorldObject findObject(TreeNode objectNode) {
@@ -144,7 +152,20 @@ public class Parser {
 	}
 
 	private Quality[] getQualities(TreeNode prepPhraseRoot) {
+		if(prepPhraseRoot.numChildren == 2 && prepPhraseRoot.getChild(0).data.equals(PREPOSITION) && prepPhraseRoot.getChild(1).data.equals(OBJECT)){
 		return new Quality[]{new Quality(getPreposition(prepPhraseRoot.getChild(0)), findOrCreateObject(prepPhraseRoot.getChild(1)))};
+		}
+		else if(prepPhraseRoot.numChildren == 3 && prepPhraseRoot.getChild(0).data.equals(PREP_PHRASE) && prepPhraseRoot.getChild(1).data.equals(AND) && prepPhraseRoot.getChild(2).data.equals(PREP_PHRASE)){
+			Quality[] qList1 = getQualities(prepPhraseRoot.getChild(0));
+			Quality[] qList2 = getQualities(prepPhraseRoot.getChild(2));
+			Quality[] qListCombined = new Quality[qList1.length + qList2.length];
+			for(int i=0; i<qList1.length; i++)
+				qListCombined[i] = qList1[i];
+			for(int i=0; i<qList2.length; i++)
+				qListCombined[qList1.length+i] = qList2[i];
+			return qListCombined;
+		}
+		return new Quality[0];
 	}
 	
 	private String getPreposition(TreeNode prepRoot){

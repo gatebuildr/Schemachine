@@ -20,6 +20,7 @@ public class WorldGrammar extends Grammar {
 		POS.add(IS);
 		POS.add(PREPOSITION);
 		POS.add(WHAT);
+		POS.add(AND);
 	}
 
 	private void initRules() {
@@ -56,12 +57,18 @@ public class WorldGrammar extends Grammar {
 		RHS[] whatRHS = {new RHS(what)};
 		rules.put(WHAT, whatRHS);
 		
+		String[] and = {AND};
+		RHS[] andRHS = {new RHS(and)};
+		rules.put(AND, andRHS);
+		
 		String[] i1 = {IS};
 		RHS[] identityRHS = {new RHS(i1)};
 		rules.put(IS, identityRHS);
 		
 		String[] pp1 = {PREPOSITION, OBJECT};
-		RHS[] prepPhraseRHS = {new RHS(pp1)};
+//		String[] pp2 = {PREPOSITION, OBJECT, AND, PREP_PHRASE};
+		String[] pp2 = {PREP_PHRASE, AND, PREP_PHRASE};
+		RHS[] prepPhraseRHS = {new RHS(pp1), new RHS(pp2)};
 		rules.put(PREP_PHRASE, prepPhraseRHS);
 		
 		String[] prepIn = {IN};

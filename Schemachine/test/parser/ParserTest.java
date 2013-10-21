@@ -27,6 +27,7 @@ public class ParserTest {
 	
 	private final TokenSet emptySet = new TokenSet();
 	private final TokenSet declarationSet = LexicalAnalyzer.analyze(OBJECT + " .");
+	private final TokenSet doublePrepDeclarationSet = LexicalAnalyzer.analyze(OBJECT + " is in " + CONTAINER + " and on " + SUPPORTER);
 	private final TokenSet containerDeclarationSet = LexicalAnalyzer.analyze(OBJECT + " is in " + CONTAINER + ".");
 	private final TokenSet containerQuerySet = LexicalAnalyzer.analyze("Is " + OBJECT + " in " + CONTAINER + "?");
 	private final TokenSet identifyContentSet = LexicalAnalyzer.analyze("What is in " + CONTAINER + "?");
@@ -96,6 +97,19 @@ public class ParserTest {
 		assertEquals(parser.parse(identifyContentSet), FAILED_TO_IDENTIFY_CONTENT);
 		parser.parse(containerDeclarationSet);
 		assertEquals(parser.parse(identifyContentSet), IDENTIFIED_CONTENT);
+	}
+	
+	@Test
+	public void testDeclareDoublePrep(){
+		World world = new World();
+		Parser parser = new Parser(world);
+		parser.parse(doublePrepDeclarationSet);
+		assertEquals(world.numObjects(), 3);
+		WorldObject object = world.findObject(OBJECT);
+		WorldObject container = world.findObject(CONTAINER);
+		WorldObject supporter = world.findObject(SUPPORTER);
+		assertTrue(supporter.supports(object));
+		assertTrue(container.contains(object));		
 	}
 	
 	@Test
