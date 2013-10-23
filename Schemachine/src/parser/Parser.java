@@ -146,7 +146,7 @@ public class Parser {
 			qString += qualityList[i] + ", ";
 		}
 		if(qualityList.length > 1){
-			qString += "and " + qualityList[qualityList.length-1].toString();
+			qString += " and " + qualityList[qualityList.length-1].toString();
 		}
 		return qString;
 	}
